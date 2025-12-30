@@ -70,8 +70,8 @@ function DraggableTodo({
         {todo.images && todo.images.length > 0 && (
           <ImageIcon className="w-3 h-3 flex-shrink-0" />
         )}
-        <span className="truncate flex-1">
-          {todo.title.length > 5 ? `${todo.title.slice(0, 5)}...` : todo.title}
+        <span className="truncate flex-1 text-xs">
+          {todo.title}
         </span>
       </div>
     </div>
@@ -97,7 +97,17 @@ function DroppableDay({
   const { setNodeRef, isOver } = useDroppable({ id: dateStr });
 
   const visibleTodos = todos.slice(0, 3);
-  const remainingCount = todos.length - 3;
+  const remainingCount = Math.max(0, todos.length - 3);
+
+  // Debug logging for dates with more than 3 todos
+  if (todos.length > 3) {
+    console.log(`🔍 DroppableDay ${dateStr}:`, {
+      totalTodos: todos.length,
+      visibleTodos: visibleTodos.length,
+      remainingCount,
+      todoTitles: todos.map(t => t.title)
+    });
+  }
 
   return (
     <div
@@ -169,6 +179,11 @@ export function CalendarGrid({
         {days.map((day) => {
           const dateStr = formatDate(day);
           const todos = todosByDate[dateStr] || [];
+
+          // Debug log for all dates with todos
+          if (todos.length > 0) {
+            console.log(`📆 ${dateStr}: ${todos.length} todo(s)`, todos.map(t => ({ title: t.title, completed: t.completed })));
+          }
 
           return (
             <DroppableDay

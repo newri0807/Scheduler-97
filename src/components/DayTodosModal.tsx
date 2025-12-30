@@ -1,14 +1,15 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Win95Window } from './Win95Window';
 import { Todo } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { storage } from '@/lib/storage';
 
 interface DayTodosModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   date: string;
-  todos: Todo[];
   onTodoClick: (todo: Todo) => void;
 }
 
@@ -16,9 +17,19 @@ export function DayTodosModal({
   open,
   onOpenChange,
   date,
-  todos,
   onTodoClick,
 }: DayTodosModalProps) {
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  // Always fetch fresh data from storage when modal opens or date changes
+  useEffect(() => {
+    if (open && date) {
+      const allTodos = storage.getTodos();
+      const filteredTodos = allTodos.filter(t => t.date === date);
+      setTodos(filteredTodos);
+    }
+  }, [open, date]);
+
   if (!open) return null;
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {

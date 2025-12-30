@@ -1,24 +1,41 @@
 {
-  "name": "Scheduler App",
+  "name": "Scheduler 97",
   "short_name": "Scheduler",
-  "description": "A beautiful scheduler PWA with calendar and todo management",
+  "description": "A beautiful Windows 97 style scheduler PWA with calendar and todo management",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#a78bfa",
+  "theme_color": "#008080",
   "orientation": "portrait",
+  "categories": ["productivity", "utilities"],
   "icons": [
     {
-      "src": "/icon-192x192.png",
+      "src": "/icon?size=192",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/icon-512x512.png",
+      "src": "/icon?size=512",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Add Task",
+      "short_name": "Add",
+      "description": "Quickly add a new task",
+      "url": "/calendar",
+      "icons": [{ "src": "/icon?size=192", "sizes": "192x192" }]
     }
   ]
 }

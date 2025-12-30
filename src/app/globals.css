@@ -119,9 +119,10 @@ body {
 .win95-task {
   background-color: #ffffff;
   border: 1px solid #000000;
-  padding: 2px 4px;
-  font-size: 11px;
+  padding: 4px 6px;
+  font-size: 12px;
   cursor: pointer;
+  min-height: 24px;
 }
 
 .win95-task.completed {
