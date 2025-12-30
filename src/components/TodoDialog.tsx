@@ -108,6 +108,19 @@ export function TodoDialog({ open, onOpenChange, todo, onUpdate }: TodoDialogPro
           date: selectedDate,
           images: images.length > 0 ? images : undefined,
         });
+
+        // Fetch fresh data from storage to update detail view
+        const todos = storage.getTodos();
+        const updatedTodo = todos.find(t => t.id === todo.id);
+
+        if (updatedTodo) {
+          // Update local state with fresh data
+          setTitle(updatedTodo.title);
+          setDescription(updatedTodo.description || '');
+          setSelectedDate(updatedTodo.date);
+          setImages(updatedTodo.images || []);
+        }
+
         setIsEditing(false);
         onUpdate();
       } catch (err) {
@@ -115,6 +128,22 @@ export function TodoDialog({ open, onOpenChange, todo, onUpdate }: TodoDialogPro
         console.error('Error updating todo:', err);
       }
     }
+  };
+
+  const handleCancelEdit = () => {
+    if (todo) {
+      // Reset to original todo data when canceling
+      const todos = storage.getTodos();
+      const freshTodo = todos.find(t => t.id === todo.id);
+      const todoData = freshTodo || todo;
+
+      setTitle(todoData.title);
+      setDescription(todoData.description || '');
+      setSelectedDate(todoData.date);
+      setImages(todoData.images || []);
+      setError('');
+    }
+    setIsEditing(false);
   };
 
   const handleDelete = () => {
@@ -228,21 +257,21 @@ export function TodoDialog({ open, onOpenChange, todo, onUpdate }: TodoDialogPro
                         todo.completed && 'line-through text-gray-600'
                       )}
                     >
-                      {todo.title}
+                      {title}
                     </p>
                   </div>
-                  {todo.description && (
+                  {description && (
                     <div>
                       <p className="text-xs font-bold">Description:</p>
-                      <p className="text-sm">{todo.description}</p>
+                      <p className="text-sm">{description}</p>
                     </div>
                   )}
-                  {todo.images && todo.images.length > 0 && (
+                  {images && images.length > 0 && (
                     <div>
-                      <p className="text-xs font-bold">Images ({todo.images.length}):</p>
+                      <p className="text-xs font-bold">Images ({images.length}):</p>
                       <div className="win95-inset p-2 max-h-40 overflow-y-auto">
                         <div className="grid grid-cols-3 gap-2">
-                          {todo.images.map((img, idx) => (
+                          {images.map((img, idx) => (
                             <div key={idx} className="relative group cursor-pointer">
                               <img
                                 src={img}
@@ -268,7 +297,7 @@ export function TodoDialog({ open, onOpenChange, todo, onUpdate }: TodoDialogPro
                   )}
                   <div>
                     <p className="text-xs font-bold">Date:</p>
-                    <p className="text-sm">{new Date(todo.date).toLocaleDateString()}</p>
+                    <p className="text-sm">{new Date(selectedDate).toLocaleDateString()}</p>
                   </div>
                   <div>
                     <p className="text-xs font-bold">Status:</p>
@@ -282,7 +311,7 @@ export function TodoDialog({ open, onOpenChange, todo, onUpdate }: TodoDialogPro
               <div className="flex gap-2 justify-end pt-2 flex-wrap">
                 {isEditing ? (
                   <>
-                    <Win95Button onClick={() => setIsEditing(false)}>
+                    <Win95Button onClick={handleCancelEdit}>
                       Cancel
                     </Win95Button>
                     <Win95Button onClick={handleSave} variant="primary">
@@ -326,22 +355,22 @@ export function TodoDialog({ open, onOpenChange, todo, onUpdate }: TodoDialogPro
         onCancel={() => setShowCompleteConfirm(false)}
       />
 
-      {todo?.images && todo.images.length > 0 && (
+      {images && images.length > 0 && (
         <>
-          {todo.images.length === 1 ? (
+          {images.length === 1 ? (
             <ImageViewer
               open={showImageViewer}
               onClose={() => setShowImageViewer(false)}
-              imageUrl={todo.images[0]}
-              title={todo.title}
+              imageUrl={images[0]}
+              title={title}
             />
           ) : (
             <ImageGalleryViewer
               open={showImageViewer}
               onClose={() => setShowImageViewer(false)}
-              images={todo.images}
+              images={images}
               initialIndex={selectedImageIndex}
-              title={todo.title}
+              title={title}
             />
           )}
         </>
