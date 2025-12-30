@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-mono);
+  --font-mono: var(--font-geist-mono);
+
+  /* Windows 95/97/98 Color Palette */
+  --color-win95-gray: #c0c0c0;
+  --color-win95-dark-gray: #808080;
+  --color-win95-light-gray: #dfdfdf;
+  --color-win95-white: #ffffff;
+  --color-win95-black: #000000;
+  --color-win95-blue: #000080;
+  --color-win95-blue-title: #000080;
+  --color-win95-highlight: #000080;
+  --color-win95-button-face: #c0c0c0;
+  --color-win95-button-shadow: #808080;
+  --color-win95-button-dark-shadow: #000000;
+  --color-win95-button-light: #ffffff;
+  --color-win95-button-highlight: #dfdfdf;
+
+  --color-background: var(--color-win95-gray);
+  --color-foreground: var(--color-win95-black);
+  --color-primary: var(--color-win95-blue);
+  --color-primary-foreground: var(--color-win95-white);
+  --radius: 0;
+}
+
+* {
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background-color: #008080; /* Teal desktop background */
+  image-rendering: pixelated;
+}
+
+/* Windows 95/97 Button Styles */
+.win95-button {
+  background-color: #c0c0c0;
+  border-width: 2px;
+  border-style: solid;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-right-color: #000000;
+  border-bottom-color: #000000;
+  box-shadow: inset 1px 1px 0 0 #dfdfdf, inset -1px -1px 0 0 #808080;
+}
+
+.win95-button:active {
+  border-top-color: #000000;
+  border-left-color: #000000;
+  border-right-color: #ffffff;
+  border-bottom-color: #ffffff;
+  box-shadow: inset 1px 1px 0 0 #808080, inset -1px -1px 0 0 #dfdfdf;
+}
+
+.win95-button:disabled {
+  color: #808080;
+  text-shadow: 1px 1px 0 #ffffff;
+}
+
+/* Windows 95/97 Panel/Window Styles */
+.win95-panel {
+  background-color: #c0c0c0;
+  border-width: 2px;
+  border-style: solid;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-right-color: #000000;
+  border-bottom-color: #000000;
+  box-shadow: inset 1px 1px 0 0 #dfdfdf, inset -1px -1px 0 0 #808080;
+}
+
+/* Inset style for inputs */
+.win95-inset {
+  background-color: #ffffff;
+  border-width: 2px;
+  border-style: solid;
+  border-top-color: #808080;
+  border-left-color: #808080;
+  border-right-color: #ffffff;
+  border-bottom-color: #ffffff;
+  box-shadow: inset 1px 1px 0 0 #000000, inset -1px -1px 0 0 #dfdfdf;
+}
+
+/* Title Bar */
+.win95-title-bar {
+  background: linear-gradient(to right, #000080, #1084d0);
+  color: #ffffff;
+  font-weight: bold;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Close Button (X) */
+.win95-close-button {
+  background-color: #c0c0c0;
+  border: 1px solid #000000;
+  width: 16px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.win95-close-button:active {
+  background-color: #808080;
+}
+
+/* Task item */
+.win95-task {
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  padding: 2px 4px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.win95-task.completed {
+  text-decoration: line-through;
+  color: #808080;
+}
